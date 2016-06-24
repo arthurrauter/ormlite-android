@@ -1,13 +1,12 @@
 package example.arthur.ormlite.models;
 
-import java.sql.SQLException;
-
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,9 +78,15 @@ public class ArtCollection {
         return lookupArtworksForArtCollection(this, dbHelper);
     }
 
-    public void saveToDb(DatabaseHelper dbHelper) throws java.sql.SQLException{
+    public void saveToDb(DatabaseHelper dbHelper) throws java.sql.SQLException {
         Dao<ArtCollection, Long> dao = dbHelper.getArtCollectionDao();
         dao.createOrUpdate(this);
+
+        Dao<ArtworkArtCollection, Integer> proxyTableDao = dbHelper.getArtworkArtCollectionDao();
+        for(Artwork aw : this.artworks) {
+            ArtworkArtCollection artworkArtCollection = new ArtworkArtCollection(this, aw);
+            proxyTableDao.createOrUpdate(artworkArtCollection);
+        }
     }
 
     public static ArtCollection loadFromDb(DatabaseHelper dbHelper, Long id) throws SQLException {
@@ -96,7 +101,7 @@ public class ArtCollection {
     public static List<Artwork> lookupArtworksForArtCollection(ArtCollection artCollection, DatabaseHelper dbHelper) throws SQLException {
 
         if (artworksForArtCollectionQuery == null) {
-                artworksForArtCollectionQuery = queryArtworksForArtCollection(dbHelper);
+            artworksForArtCollectionQuery = queryArtworksForArtCollection(dbHelper);
         }
         artworksForArtCollectionQuery.setArgumentHolderValue(0, artCollection);
         Dao<Artwork, Long> artworkDao = dbHelper.getArtworkDao();

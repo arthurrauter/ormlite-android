@@ -137,7 +137,7 @@ public class Artwork {
         artworkArtCollectionQB.where().eq(ArtworkArtCollection.ARTWORK_ID_COLNAME, artworkSelectArg);
 
         QueryBuilder<ArtCollection, Long> artCollectionQb = artCollectionDao.queryBuilder();
-        artCollectionQb.where().in(Artwork.ID_COLNAME, artworkArtCollectionQB);
+        artCollectionQb.where().in(ArtCollection.ID_COLNAME, artworkArtCollectionQB);
 
         return artCollectionQb.prepare();
 
