@@ -18,8 +18,8 @@ import example.arthur.ormlite.models.User;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASE_NAME = "bright.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final String DATABASE_NAME = "gallery.db";
+    private static final int DATABASE_VERSION = 4;
 
     //DATA ACCESS OBJECTS: interface between DB and program
     private Dao<Artwork, Long> artworkDao = null;
