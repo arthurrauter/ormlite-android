@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         Artwork equinox = artworkList.get(2);
         testcol.addArtwork(equinox);
         equinox.addArtCollection(testcol);
+        coltrane.addArtCollection(testcol);
+        testcol.setCurator(coltrane);
 
         //arthur has a jazzcol with 3 artworks
         ArtCollection jazzcol = artCollectionList.get(0);
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         jazzcol.addArtwork(artworkList.get(0));
         jazzcol.addArtwork(artworkList.get(1));
         jazzcol.addArtwork(artworkList.get(2));
+        jazzcol.setCurator(arthur);
         //the artworks reference the collections they belong to
         for (Artwork a : artworkList){
             a.addArtCollection(jazzcol);
