@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,42 +31,52 @@ public class MainActivity extends AppCompatActivity {
 //        DatabaseHelper killEmAll = OpenHelperManager.getHelper(this, DatabaseHelper.class);
 //        killEmAll.clear();
 
+        //creating users
+        List<User> userList = new ArrayList<>();
+        userList.add(new User(11L, "John Coltrane"));
+        userList.add(new User(12L, "Arthur"));
+
         //creating artworks
-        Artwork artwork = new Artwork(100L, "As", "music/as.mp3");
-        Artwork artwork2 = new Artwork(101L, "I wish", "music/iwish.mp3");
-
-        User user = new User(200L, "Stevie Wonder");
-        User user2 = new User(201L, "Little Arthur");
-        ArtCollection artCollection = new ArtCollection(300L, "best of Stevie");
-        ArtCollection artCollection2 = new ArtCollection(301L, "test artCollection");
-
-
-        //List of artworks
         List<Artwork> artworkList = new ArrayList<>();
-        artworkList.add(artwork);
-        artworkList.add(artwork2);
+        artworkList.add(new Artwork(1L, "Giant Steps", "music/giant-steps.mp3"));
+        artworkList.add(new Artwork(2L, "Cousin Mary", "music/cousin-mary.mp3"));
+        artworkList.add(new Artwork(3L, "Equinox", "music/equinox.mp3"));
+
+        //creating collections
+        List<ArtCollection> artCollectionList = new ArrayList<>();
+        artCollectionList.add(new ArtCollection(21L, "some Jazz"));
+        artCollectionList.add(new ArtCollection(22L, "test collection"));
 
         //joining artworks and users
-        user.setArtworks(artworkList);
-        artwork.setOwner(user);
-        artwork2.setOwner(user);
-        //user2 has nothing to do with this
-        user2.setArtworks(null);
+        //all artworks so far belong to John Coltrane and none to Arthur
+        userList.get(0).addArtwork(artworkList.get(0));
+        userList.get(0).addArtwork(artworkList.get(1));
+        userList.get(0).addArtwork(artworkList.get(2));
+        artworkList.get(0).setOwner(userList.get(0));
+        artworkList.get(1).setOwner(userList.get(0));
+        artworkList.get(2).setOwner(userList.get(0));
+        //Arthur has no artworks
+        userList.get(1).setArtworks(null);
 
-        //joining collections and artworks
-        artCollection.addArtwork(artwork);
-        artCollection.addArtwork(artwork2);
-        artwork.addArtCollection(artCollection);
-        artwork2.addArtCollection(artCollection);
-        artwork.setFromArtCollection(artCollection);
-        artwork2.setFromArtCollection(artCollection);
+        //making the collections have artworks and users have collections
+        //Coltrane has testcol, which has equinox. Equinox references testcol.
+        ArtCollection testcol = artCollectionList.get(1);
+        User coltrane = userList.get(0);
+        Artwork equinox = artworkList.get(2);
+        testcol.addArtwork(equinox);
+        equinox.addArtCollection(testcol);
 
-        //joining users and collections
-        user.setArtCollections(null);
-        user2.addArtCollection(artCollection);
-        artCollection.setCurator(user2);
-        user2.addArtCollection(artCollection2);
-        artCollection2.setCurator(user2);
+        //arthur has a jazzcol with 3 artworks
+        ArtCollection jazzcol = artCollectionList.get(0);
+        User arthur = userList.get(1);
+        jazzcol.addArtwork(artworkList.get(0));
+        jazzcol.addArtwork(artworkList.get(1));
+        jazzcol.addArtwork(artworkList.get(2));
+        //the artworks reference the collections they belong to
+        for (Artwork a : artworkList){
+            a.addArtCollection(jazzcol);
+        }
+        arthur.addArtCollection(jazzcol);
 
         DatabaseHelper dbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
 
@@ -76,30 +87,22 @@ public class MainActivity extends AppCompatActivity {
             Dao<ArtCollection, Long> collectionDao = dbHelper.getArtCollectionDao();
             Dao<ArtworkArtCollection, Integer> artworkArtCollectionDao = dbHelper.getArtworkArtCollectionDao();
 
-            artworkDao.createOrUpdate(artwork);
-            artworkDao.createOrUpdate(artwork2);
-//            collectionDao.createOrUpdate(artCollection);
-//            collectionDao.createOrUpdate(artCollection2);
-            artCollection.saveToDb(dbHelper);
-            artCollection2.saveToDb(dbHelper);
-            userDao.createOrUpdate(user);
-            userDao.createOrUpdate(user2);
-
+            //save everything to the DB
             for (Artwork aw : artworkList) {
-                for (ArtCollection k : aw.getArtCollections()) {
-                    ArtworkArtCollection ak = new ArtworkArtCollection(k, aw);
-                    artworkArtCollectionDao.createOrUpdate(ak);
-                }
+                aw.saveToDb(dbHelper);
             }
 
-            List<Artwork> artworksOnDb = artworkDao.queryForAll();
+            for (ArtCollection ac : artCollectionList) {
+                ac.saveToDb(dbHelper);
+            }
+
+            for (User u : userList) {
+                u.saveToDb(dbHelper);
+            }
+
             List<User> ownersOnDb = userDao.queryForAll();
+            List<Artwork> artworksOnDb = artworkDao.queryForAll();
             List<ArtCollection> collectionsOnDb = collectionDao.queryForAll();
-
-            java.util.Collection test = artworksOnDb.get(0).getArtCollections();
-
-            ArtCollection col1 = ArtCollection.loadFromDb(dbHelper, 300L);
-            ArtCollection col2 = ArtCollection.loadFromDb(dbHelper, 301L);
 
             main.append(" trycatch");
             dbHelper.close();
