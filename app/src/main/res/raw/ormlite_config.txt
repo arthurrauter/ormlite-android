@@ -1,0 +1,102 @@
+#
+# generated on 2016/06/23 04:52:39
+#
+# --table-start--
+dataClass=example.arthur.ormlite.models.Artwork
+tableName=artwork
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=_id
+generatedId=true
+allowGeneratedIdInsert=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=file
+# --field-end--
+# --field-start--
+fieldName=fromArtCollection
+columnName=from_collection_id
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --field-start--
+fieldName=owner
+columnName=user_id
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=example.arthur.ormlite.models.User
+tableName=user
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+allowGeneratedIdInsert=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=artCollections
+foreignCollection=true
+foreignCollectionEager=true
+# --field-end--
+# --field-start--
+fieldName=artworks
+foreignCollection=true
+foreignCollectionEager=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=example.arthur.ormlite.models.ArtCollection
+tableName=artcollection
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=_id
+generatedId=true
+allowGeneratedIdInsert=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=curator
+columnName=user_id
+foreign=true
+foreignAutoRefresh=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=example.arthur.ormlite.models.ArtworkArtCollection
+tableName=artworkartcollection
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=artCollection
+columnName=collection_id
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=artwork
+columnName=artwork_id
+foreign=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
