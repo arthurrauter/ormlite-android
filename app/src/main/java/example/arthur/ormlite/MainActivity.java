@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.PreparedQuery;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         jazzcol.addArtwork(artworkList.get(2));
         jazzcol.setCurator(arthur);
         //the artworks reference the collections they belong to
-        for (Artwork a : artworkList){
+        for (Artwork a : artworkList) {
             a.addArtCollection(jazzcol);
         }
         arthur.addArtCollection(jazzcol);
@@ -106,6 +105,14 @@ public class MainActivity extends AppCompatActivity {
             List<User> ownersOnDb = userDao.queryForAll();
             List<Artwork> artworksOnDb = artworkDao.queryForAll();
             List<ArtCollection> collectionsOnDb = collectionDao.queryForAll();
+
+            //these two should be the same
+            List<Artwork> artworksInJazzcol = jazzcol.getArtworks(dbHelper);
+            List<Artwork> straightFromTheDB = collectionsOnDb.get(0).getArtworks(dbHelper);
+
+            List<Artwork> someArtworks = jazzcol.lookupArtworksForArtCollection(jazzcol, dbHelper);
+
+            List<ArtCollection> collectionsEquinoxIsIn = artworksOnDb.get(2).getArtCollections(dbHelper);
 
             main.append(" trycatch");
             dbHelper.close();
