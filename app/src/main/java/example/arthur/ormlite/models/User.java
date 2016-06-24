@@ -1,9 +1,13 @@
 package example.arthur.ormlite.models;
 
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import example.arthur.ormlite.DatabaseHelper;
 
 public class User {
 
@@ -73,5 +77,16 @@ public class User {
             artworks = new ArrayList<>();
         }
         artworks.add(artwork);
+    }
+
+    public void saveToDb(DatabaseHelper dbHelper) throws java.sql.SQLException{
+        Dao<User, Long> dao = dbHelper.getUserDao();
+        dao.createOrUpdate(this);
+    }
+
+    public static User loadFromDb(DatabaseHelper dbHelper, Long id) throws SQLException {
+        Dao<User, Long> dao = dbHelper.getUserDao();
+        User user = dao.queryForId(id);
+        return user;
     }
 }
