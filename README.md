@@ -4,6 +4,11 @@
 - Developed with Android Studio.
 - Database is Sqlite3.
 
+##TL;DR
+- Run the debugger with a breakpoint in line 117 of the [MainActivity](https://github.com/arthurrauter/ormlite-android/blob/master/app/src/main/java/example/arthur/ormlite/MainActivity.java) and have fun.
+- The magic happens mostly in the [models](https://github.com/arthurrauter/ormlite-android/tree/master/app/src/main/java/example/arthur/ormlite/models). See the SaveToDB and LoadFromDb methods.
+- Users have Artworks and ArtCollections. ArtCollections and Artworks reference each other.
+
 ## Setup
 Go to `Project Structure` click the `app` module (or whatever your main module is) and in the `Dependecies` tab add the follow modules:
 - com.j256.ormlite:ormlite-android:4.48
