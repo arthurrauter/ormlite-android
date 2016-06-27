@@ -11,28 +11,33 @@ You will need to create:
 - an empty `ormlite_config.txt` inside the `raw` folder
 (otherwise you can't run DatabaseConfigUtil)
 
+and finally:
+- run `DatabaseConfigUtil.java`
+
 ## overview
-### what the classes mean
-You have Users, Artworks and ArtCollections. Users have Artworks and ArtCollections. Therefore we have 2 one-to-many relationships:
+### what is this?
+Pretend you are managing a Gallery: you have Users, Artworks and ArtCollections. You can view `User as an Artist`, to make it simpler.
+
 - User to (many) Artworks
 - User to (many) ArtCollections
+- Artworks (many) to (many) ArtCollections
 
-ArtCollections have Artworks, but the Artworks also reference the ArtCollections they belong to. Therefore we have 1 many-to-many relationship.
+Users have Artworks and ArtCollections. Therefore we have 2 one-to-many relationships. ArtCollections have Artworks, but the Artworks also reference the ArtCollections they belong to. Therefore we have 1 many-to-many relationship.
 
 ### how to implement the relationships with ORMLite
-The one-to-many relationship is very easy:
+One-to-Many:
 - User has to have a @ForeignCollectionField with a COLLECTION (no, lists won't work):
 ```java
 @ForeignCollectionField(eager = true)
-    java.util.Collection<Artwork> artworks;
+java.util.Collection<Artwork> artworks;
 ```
-- Artworks has to reference back to User:
+- Artwork *has* to reference back to the User it belongs to:
 ```java
 @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "user_id")
-    User owner;
+User owner;
 ```
 
-The many-to-many relationship is trickier. You will need to manage a linker table (or proxy table) between the Artwork and ArtCollection. This is done with the ArtworkArtCollection class.
+The Many-to-Many relationship is trickier. You will need to manage a linker table (or proxy table) between the Artwork and ArtCollection. This is done with the ArtworkArtCollection class.
 
 ```java
 public class ArtworkArtCollection {
@@ -59,7 +64,15 @@ public class ArtworkArtCollection {
 }
 ```
 
-Instead of having an annotation to handle the relationship for you, you will have to populate this an object of this class for every link between an ArtCollection and an Artwork and save it to the database.
+Instead of having an annotation to handle the relationship for you, you will have to populate an object of this class for every link between an ArtCollection and an Artwork and save it to the database.
+
+When you want to retrieve which Artworks belong to an ArtCollection you will have to query the linker table as well. See: `List<Artwork> lookupArtworksForArtCollection(DatabaseHelper dbHelper)` inside ArtCollection.
+
+## useful links
+- https://horaceheaven.com/android-ormlite-tutorial/ 
+- https://github.com/j256/ormlite-jdbc/tree/master/src/test/java/com/j256/ormlite/examples 
+- http://stackoverflow.com/questions/17673461/ormlite-many-to-many-relation/17701447?noredirect=1#comment63360249_17701447
+- http://www.singingeels.com/Articles/Understanding_SQL_Many_to_Many_Relationships.aspx
 
 
 
