@@ -73,8 +73,13 @@ Instead of having an annotation to handle the relationship for you, you will hav
 When you want to retrieve which Artworks belong to an ArtCollection you will have to query the linker table as well. See: `List<Artwork> lookupArtworksForArtCollection(DatabaseHelper dbHelper)` inside ArtCollection.
 
 ## Commentary & Observations
-I could not find a way to keep the Database transparent for the rest of the application because of the Many-to-many relationship. I had to manage myself the linker table and there is no way to "hide" it. I tried wrapping all the operations inside the `saveToDb` and `loadFromDb` methods, but those methods still require a DatabaseHelper to function.
+At first I was trying to avoid writing all the SQL statements to generate the tables, because I will use ORMLite for a real application were the objects have much more fields than the ones in this example. Then, I thought that the ORM could help me easily persist all the objects withing my application in way that I could basically just "save all to db" and then "load all from the db" without having to worry about SQL or table structure at all. This was perhaps a bit utopic, but a man has the right to dream. Even after the first disappointments, I thought the ORM would be able to identify that some objects already existed and avoid duplication, but that was not the case.
 
+In the end, I think that my classes are more strongly coupled with the Database than I wanted to (they now depend on ORMLite, for example), but I didn't have to write any SQL statements. 
+
+The end result is that I have to be aware I am using a database and that objects will get duplicated. I cannot recreate the pool of objects I had before and work with unless I created a class to manage such pool, avoiding the creation of unnecessary instances and keeping the references correct. I don't think that the effort is worth for what I need right now. 
+
+### duplicated objects
 Every query done to the DB will generate new instances, even if the objects already exist inside you application (regardless of being a one-to-many or many-to-many relationship). For example: query for all ArtCollections, you will get a List of ArtCollections, all containing an User object. Then query for all the Users. You will get a List of Users. When you get the List of Users, new instances will be created for each User. From the Logical point of view at least some of these Users already exist inside the application (they were created and are being referenced by ArtCollection from the List of ArtCollection that we queried before), but in practice new objects for those Users will be created.
 
 ## useful links
