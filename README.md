@@ -16,7 +16,7 @@ and finally:
 
 ## overview
 ### what is this?
-Pretend you are managing a Gallery: you have Users, Artworks and ArtCollections. This repo is a very simple application that present one possible solution to persisting the objects into the database. 
+Pretend you are managing a Gallery: you have Users, Artworks and ArtCollections. This repo is a very simple application that presents one possible solution to persisting the objects into the database. 
 
 - User to (many) Artworks
 - User to (many) ArtCollections
@@ -68,7 +68,15 @@ Instead of having an annotation to handle the relationship for you, you will hav
 
 When you want to retrieve which Artworks belong to an ArtCollection you will have to query the linker table as well. See: `List<Artwork> lookupArtworksForArtCollection(DatabaseHelper dbHelper)` inside ArtCollection.
 
+## commentary & observations
+I could not find a way to keep the Database transparent for the rest of the application because of the Many-to-many relationship. I had to manage myself the linker table and there is no way to "hide" it. I tried wrapping all the operations inside the `saveToDb` and `loadFromDb` methods, but those methods still require a DatabaseHelper to function.
+
+Every query done to the DB will generate new instances, even if the objects already exist inside you application (regardless of being a one-to-many or many-to-many relationship). For example: query for all ArtCollections, you will get a List of ArtCollections, all containing an User object. Then query for all the Users. You will get a List of Users. When you get the List of Users, new instances will be created for each User. From the Logical point of view at least some of these Users already exist inside the application (they were created and are being referenced by ArtCollection from the List of ArtCollection that we queried before), but in practice new objects for those Users will be created.
+
+
+
 ## useful links
+(don't forget to read the ORMLite docs!)
 - https://horaceheaven.com/android-ormlite-tutorial/ 
 - https://github.com/j256/ormlite-jdbc/tree/master/src/test/java/com/j256/ormlite/examples 
 - http://stackoverflow.com/questions/17673461/ormlite-many-to-many-relation/17701447?noredirect=1#comment63360249_17701447
