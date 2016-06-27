@@ -1,13 +1,13 @@
 # ormlite-android
-Using ORMLite with Android. 'One to Many' and 'Many to Many' relation included. Developed with Android Studio. Database is Sqlite3.
+Using ORMLite with Android. 'One to Many' and 'Many to Many' relationships. Developed with Android Studio. Database is Sqlite3.
 
 ## setup
-Go to `Project Structure` -> `app` (or whatever your main module is) and in the `Dependecies` tab add the follow modules:
+Go to `Project Structure` click the `app` module (or whatever your main module is) and in the `Dependecies` tab add the follow modules:
 - com.j256.ormlite:ormlite-android:4.48
-- com.j256.ormlite:ormlite-android:4.48
+- com.j256.ormlite:ormlite-core:4.48
 
 You will need to create:
-- `raw` folder inside you project's `res` folder
+- a `raw` folder inside you project's `res` folder
 - an empty `ormlite_config.txt` inside the `raw` folder
 (otherwise you can't run DatabaseConfigUtil)
 
@@ -16,7 +16,9 @@ and finally:
 
 ## overview
 ### what is this?
-Pretend you are managing a Gallery: you have Users, Artworks and ArtCollections. This repo is a very simple application that presents one possible solution to persisting the objects into the database. 
+Pretend you are managing a Gallery. You have Users, Artworks and ArtCollections. This repo is a very simple application that presents one possible solution to persisting the objects into the database. 
+
+Relationship between classes:
 
 - User to (many) Artworks
 - User to (many) ArtCollections
