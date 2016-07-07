@@ -25,4 +25,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.j256.ormlite:ormlite-core:4.48'
+    compile 'com.tojc.ormlite.android:ormlite-content-provider-compiler:1.0.4'
+    compile 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    compile 'com.squareup:javawriter:2.5.1'
+    compile 'com.tojc.ormlite.android:ormlite-content-provider-library:1.0.4'
 }

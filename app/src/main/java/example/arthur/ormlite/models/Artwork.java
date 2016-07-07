@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
+import com.tojc.ormlite.android.annotation.AdditionalAnnotation;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,10 +13,14 @@ import java.util.List;
 
 import example.arthur.ormlite.DatabaseHelper;
 
+@AdditionalAnnotation.Contract()
+@AdditionalAnnotation.DefaultContentUri(authority = "com.bright.screen", path = "artworks")
+@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = "com.bright.screen", type = "artworks")
 public class Artwork {
 
     public final static String ID_COLNAME = "_id";
 
+    @AdditionalAnnotation.DefaultSortOrder
     @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ID_COLNAME)
     Long id;
 

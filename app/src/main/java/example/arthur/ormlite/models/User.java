@@ -3,14 +3,19 @@ package example.arthur.ormlite.models;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.tojc.ormlite.android.annotation.AdditionalAnnotation;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import example.arthur.ormlite.DatabaseHelper;
 
+@AdditionalAnnotation.Contract()
+@AdditionalAnnotation.DefaultContentUri(authority = "com.bright.screen", path = "users")
+@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = "com.bright.screen", type = "users")
 public class User {
 
+    @AdditionalAnnotation.DefaultSortOrder
     @DatabaseField(generatedId = true, allowGeneratedIdInsert = true)
     Long id;
 
