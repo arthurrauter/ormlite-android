@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
+import com.j256.ormlite.table.DatabaseTable;
 import com.tojc.ormlite.android.annotation.AdditionalAnnotation;
 
 import java.sql.SQLException;
@@ -12,28 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.arthur.ormlite.DatabaseHelper;
+import example.arthur.ormlite.GalleryContract;
 
+@DatabaseTable(tableName = GalleryContract.ArtworkEntry.TABLE_NAME)
 @AdditionalAnnotation.Contract()
 @AdditionalAnnotation.DefaultContentUri(authority = "com.bright.screen", path = "artworks")
 @AdditionalAnnotation.DefaultContentMimeTypeVnd(name = "com.bright.screen", type = "artworks")
 public class Artwork {
 
-    public final static String ID_COLNAME = "_id";
-
     @AdditionalAnnotation.DefaultSortOrder
-    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ID_COLNAME)
+    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = GalleryContract.ArtworkEntry._ID)
     Long id;
 
-    @DatabaseField
+    @DatabaseField(columnName = GalleryContract.ArtworkEntry.NAME)
     String name;
 
-    @DatabaseField
+    @DatabaseField(columnName = GalleryContract.ArtworkEntry.FILE)
     String file;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "from_collection_id")
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = GalleryContract.ArtworkEntry.FROM_ARTCOLLECTION)
     ArtCollection fromArtCollection;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "user_id")
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = GalleryContract.ArtworkEntry.OWNER)
     User owner;
 
     List<ArtCollection> artCollections;
