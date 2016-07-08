@@ -17,8 +17,8 @@ import example.arthur.ormlite.GalleryContract;
 import static example.arthur.ormlite.GalleryContract.*;
 
 @AdditionalAnnotation.Contract()
-@AdditionalAnnotation.DefaultContentUri(authority = "com.bright.screen", path = "artcollections")
-@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = "com.bright.screen", type = "artcollections")
+@AdditionalAnnotation.DefaultContentUri(authority = GalleryContract.CONTENT_AUTHORITY, path = PATH_ARTWORK)
+@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = GalleryContract.CONTENT_AUTHORITY, type = PATH_ARTWORK)
 public class ArtCollection {
 
     @AdditionalAnnotation.DefaultSortOrder

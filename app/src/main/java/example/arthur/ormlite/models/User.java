@@ -9,10 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import example.arthur.ormlite.DatabaseHelper;
+import example.arthur.ormlite.GalleryContract;
+
+import static example.arthur.ormlite.GalleryContract.*;
 
 @AdditionalAnnotation.Contract()
-@AdditionalAnnotation.DefaultContentUri(authority = "com.bright.screen", path = "users")
-@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = "com.bright.screen", type = "users")
+@AdditionalAnnotation.DefaultContentUri(authority = CONTENT_AUTHORITY, path = PATH_ARTCOLLECTION)
+@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = CONTENT_AUTHORITY, type = PATH_ARTCOLLECTION)
 public class User {
 
     @AdditionalAnnotation.DefaultSortOrder

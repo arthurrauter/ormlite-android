@@ -13,6 +13,9 @@ public class GalleryContract implements BaseColumns {
     public static final String PATH_ARTCOLLECTION = "artcollection";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
+    public static final int CONTENT_URI_PATTERN_ONE = 1;
+    public static final int CONTENT_URI_PATTERN_MANY = 2;
+
     public static final class ArtworkEntry implements BaseColumns {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_ARTWORK).build();
