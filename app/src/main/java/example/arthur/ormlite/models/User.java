@@ -16,8 +16,8 @@ import static example.arthur.ormlite.provider.GalleryContract.*;
 
 @DatabaseTable(tableName = UserContract.TABLE_NAME)
 @AdditionalAnnotation.Contract()
-@AdditionalAnnotation.DefaultContentUri(authority = CONTENT_AUTHORITY, path = PATH_ARTCOLLECTION)
-@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = CONTENT_AUTHORITY, type = PATH_ARTCOLLECTION)
+@AdditionalAnnotation.DefaultContentUri(authority = CONTENT_AUTHORITY, path = PATH_USER)
+@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = CONTENT_AUTHORITY, type = PATH_USER)
 public class User {
 
     @AdditionalAnnotation.DefaultSortOrder

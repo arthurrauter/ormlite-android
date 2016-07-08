@@ -14,6 +14,9 @@ public final class ArtworkContract implements BaseColumns {
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + GalleryContract.CONTENT_AUTHORITY + "/" + GalleryContract.PATH_ARTWORK;
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + GalleryContract.CONTENT_AUTHORITY + "/" + GalleryContract.PATH_ARTWORK;
 
+    public static final int CONTENT_URI_PATTERN_ONE = 3;
+    public static final int CONTENT_URI_PATTERN_MANY = 4;
+
     public static Uri buildArtworkUri(long id) {
         return ContentUris.withAppendedId(CONTENT_URI, id);
     }

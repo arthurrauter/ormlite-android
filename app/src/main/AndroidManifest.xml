@@ -17,7 +17,7 @@
         </activity>
 
         <provider
-            android:authorities="com.bright.screen"
+            android:authorities="example.arthur.ormlite"
             android:name=".provider.MagicProvider" />
 
     </application>

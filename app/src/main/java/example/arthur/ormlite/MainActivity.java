@@ -1,7 +1,9 @@
 package example.arthur.ormlite;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -15,6 +17,9 @@ import example.arthur.ormlite.models.ArtCollection;
 import example.arthur.ormlite.models.Artwork;
 import example.arthur.ormlite.models.ArtworkArtCollection;
 import example.arthur.ormlite.models.User;
+import example.arthur.ormlite.provider.ArtCollectionContract;
+import example.arthur.ormlite.provider.ArtworkContract;
+import example.arthur.ormlite.provider.UserContract;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -116,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
 
             main.append(" trycatch");
             dbHelper.close();
+
+            Log.d("curi", UserContract.CONTENT_URI.toString());
+            Cursor c = getContentResolver().query(UserContract.CONTENT_URI, null, null, null, null);
+            c.moveToFirst();
+            do {
+                for (int i = 0; i < c.getColumnCount(); i++) {
+                    Log.d(getClass().getSimpleName(), c.getColumnName(i) + " : " + c.getString(i));
+                }
+            } while (c.moveToNext());
+            c.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

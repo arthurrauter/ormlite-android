@@ -21,8 +21,8 @@ import static example.arthur.ormlite.provider.GalleryContract.*;
 
 @DatabaseTable(tableName = ArtCollectionContract.TABLE_NAME)
 @AdditionalAnnotation.Contract()
-@AdditionalAnnotation.DefaultContentUri(authority = GalleryContract.CONTENT_AUTHORITY, path = PATH_ARTWORK)
-@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = GalleryContract.CONTENT_AUTHORITY, type = PATH_ARTWORK)
+@AdditionalAnnotation.DefaultContentUri(authority = GalleryContract.CONTENT_AUTHORITY, path = PATH_ARTCOLLECTION)
+@AdditionalAnnotation.DefaultContentMimeTypeVnd(name = GalleryContract.CONTENT_AUTHORITY, type = PATH_ARTCOLLECTION)
 public class ArtCollection {
 
     @AdditionalAnnotation.DefaultSortOrder

@@ -23,12 +23,15 @@ public class MagicProvider extends OrmLiteSimpleContentProvider<DatabaseHelper> 
     @Override
     public boolean onCreate() {
         setMatcherController(new MatcherController()
-                .add(Artwork.class, MimeTypeVnd.SubType.ITEM, "#", GalleryContract.CONTENT_URI_PATTERN_ONE)
-                .add(Artwork.class, MimeTypeVnd.SubType.DIRECTORY, "", GalleryContract.CONTENT_URI_PATTERN_MANY)
-                .add(User.class, MimeTypeVnd.SubType.ITEM, "#", GalleryContract.CONTENT_URI_PATTERN_ONE)
-                .add(User.class, MimeTypeVnd.SubType.DIRECTORY, "", GalleryContract.CONTENT_URI_PATTERN_MANY)
-                .add(ArtCollection.class, MimeTypeVnd.SubType.ITEM, "#", GalleryContract.CONTENT_URI_PATTERN_ONE)
-                .add(ArtCollection.class, MimeTypeVnd.SubType.DIRECTORY, "", GalleryContract.CONTENT_URI_PATTERN_MANY)
+                .add(ArtCollection.class, MimeTypeVnd.SubType.ITEM, "#", ArtCollectionContract.CONTENT_URI_PATTERN_ONE)
+                .add(ArtCollection.class, MimeTypeVnd.SubType.DIRECTORY, "", ArtCollectionContract.CONTENT_URI_PATTERN_MANY)
+
+                .add(Artwork.class, MimeTypeVnd.SubType.ITEM, "#", ArtworkContract.CONTENT_URI_PATTERN_ONE)
+                .add(Artwork.class, MimeTypeVnd.SubType.DIRECTORY, "", ArtworkContract.CONTENT_URI_PATTERN_MANY)
+
+                .add(User.class, MimeTypeVnd.SubType.ITEM, "#", UserContract.CONTENT_URI_PATTERN_ONE)
+                .add(User.class, MimeTypeVnd.SubType.DIRECTORY, "", UserContract.CONTENT_URI_PATTERN_MANY)
+
         );
         return true;
     }

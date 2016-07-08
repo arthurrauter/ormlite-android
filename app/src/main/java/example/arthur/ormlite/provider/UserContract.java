@@ -14,6 +14,9 @@ public final class UserContract implements BaseColumns {
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + GalleryContract.CONTENT_AUTHORITY + "/" + GalleryContract.PATH_USER;
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + GalleryContract.CONTENT_AUTHORITY + "/" + GalleryContract.PATH_USER;
 
+    public static final int CONTENT_URI_PATTERN_ONE = 5;
+    public static final int CONTENT_URI_PATTERN_MANY = 6;
+
     public static Uri buildUserUri(long id) {
         return ContentUris.withAppendedId(CONTENT_URI, id);
     }
