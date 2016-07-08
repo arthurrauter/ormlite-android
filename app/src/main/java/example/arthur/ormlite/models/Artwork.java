@@ -15,26 +15,28 @@ import java.util.List;
 import example.arthur.ormlite.DatabaseHelper;
 import example.arthur.ormlite.GalleryContract;
 
-@DatabaseTable(tableName = GalleryContract.ArtworkEntry.TABLE_NAME)
+import static example.arthur.ormlite.GalleryContract.*;
+
+@DatabaseTable(tableName = ArtworkEntry.TABLE_NAME)
 @AdditionalAnnotation.Contract()
 @AdditionalAnnotation.DefaultContentUri(authority = "com.bright.screen", path = "artworks")
 @AdditionalAnnotation.DefaultContentMimeTypeVnd(name = "com.bright.screen", type = "artworks")
 public class Artwork {
 
     @AdditionalAnnotation.DefaultSortOrder
-    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = GalleryContract.ArtworkEntry._ID)
+    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ArtworkEntry._ID)
     Long id;
 
-    @DatabaseField(columnName = GalleryContract.ArtworkEntry.NAME)
+    @DatabaseField(columnName = ArtworkEntry.NAME)
     String name;
 
-    @DatabaseField(columnName = GalleryContract.ArtworkEntry.FILE)
+    @DatabaseField(columnName = ArtworkEntry.FILE)
     String file;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = GalleryContract.ArtworkEntry.FROM_ARTCOLLECTION)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtworkEntry.FROM_ARTCOLLECTION)
     ArtCollection fromArtCollection;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = GalleryContract.ArtworkEntry.OWNER)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtworkEntry.OWNER)
     User owner;
 
     List<ArtCollection> artCollections;
@@ -143,7 +145,7 @@ public class Artwork {
         artworkArtCollectionQB.where().eq(ArtworkArtCollection.ARTWORK_ID_COLNAME, artworkSelectArg);
 
         QueryBuilder<ArtCollection, Long> artCollectionQb = artCollectionDao.queryBuilder();
-        artCollectionQb.where().in(ArtCollection.ID_COLNAME, artworkArtCollectionQB);
+        artCollectionQb.where().in(ArtCollectionEntry._ID, artworkArtCollectionQB);
 
         return artCollectionQb.prepare();
 

@@ -12,22 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.arthur.ormlite.DatabaseHelper;
+import example.arthur.ormlite.GalleryContract;
+
+import static example.arthur.ormlite.GalleryContract.*;
 
 @AdditionalAnnotation.Contract()
 @AdditionalAnnotation.DefaultContentUri(authority = "com.bright.screen", path = "artcollections")
 @AdditionalAnnotation.DefaultContentMimeTypeVnd(name = "com.bright.screen", type = "artcollections")
 public class ArtCollection {
 
-    public final static String ID_COLNAME = "_id";
-
     @AdditionalAnnotation.DefaultSortOrder
-    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ID_COLNAME)
+    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ArtCollectionEntry._ID)
     Long id;
 
-    @DatabaseField
+    @DatabaseField(columnName = ArtCollectionEntry.NAME)
     String name;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "user_id")
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtCollectionEntry.CURATOR)
     User curator;
 
     List<Artwork> artworks = null;
@@ -124,7 +125,7 @@ public class ArtCollection {
         artworkArtCollectionQB.where().eq(ArtworkArtCollection.ARTCOLLECTION_ID_COLNAME, artworkSelectArg);
 
         QueryBuilder<Artwork, Long> artworkQb = artworkDao.queryBuilder();
-        artworkQb.where().in(Artwork.ID_COLNAME, artworkArtCollectionQB);
+        artworkQb.where().in(ArtworkEntry._ID, artworkArtCollectionQB);
 
         return artworkQb.prepare();
 
