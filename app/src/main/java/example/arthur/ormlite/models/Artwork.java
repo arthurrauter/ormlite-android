@@ -13,30 +13,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.arthur.ormlite.DatabaseHelper;
-import example.arthur.ormlite.GalleryContract;
+import example.arthur.ormlite.provider.ArtCollectionContract;
+import example.arthur.ormlite.provider.ArtworkContract;
 
-import static example.arthur.ormlite.GalleryContract.*;
+import static example.arthur.ormlite.provider.GalleryContract.*;
 
-@DatabaseTable(tableName = ArtworkEntry.TABLE_NAME)
+@DatabaseTable(tableName = ArtworkContract.TABLE_NAME)
 @AdditionalAnnotation.Contract()
 @AdditionalAnnotation.DefaultContentUri(authority = CONTENT_AUTHORITY, path = PATH_ARTWORK)
 @AdditionalAnnotation.DefaultContentMimeTypeVnd(name = CONTENT_AUTHORITY, type = PATH_ARTWORK)
 public class Artwork {
 
     @AdditionalAnnotation.DefaultSortOrder
-    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ArtworkEntry._ID)
+    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ArtworkContract._ID)
     Long id;
 
-    @DatabaseField(columnName = ArtworkEntry.NAME)
+    @DatabaseField(columnName = ArtworkContract.NAME)
     String name;
 
-    @DatabaseField(columnName = ArtworkEntry.FILE)
+    @DatabaseField(columnName = ArtworkContract.FILE)
     String file;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtworkEntry.FROM_ARTCOLLECTION)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtworkContract.FROM_ARTCOLLECTION)
     ArtCollection fromArtCollection;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtworkEntry.OWNER)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtworkContract.OWNER)
     User owner;
 
     List<ArtCollection> artCollections;
@@ -145,7 +146,7 @@ public class Artwork {
         artworkArtCollectionQB.where().eq(ArtworkArtCollection.ARTWORK_ID_COLNAME, artworkSelectArg);
 
         QueryBuilder<ArtCollection, Long> artCollectionQb = artCollectionDao.queryBuilder();
-        artCollectionQb.where().in(ArtCollectionEntry._ID, artworkArtCollectionQB);
+        artCollectionQb.where().in(ArtCollectionContract._ID, artworkArtCollectionQB);
 
         return artCollectionQb.prepare();
 

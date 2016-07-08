@@ -18,7 +18,7 @@
 
         <provider
             android:authorities="com.bright.screen"
-            android:name=".MagicProvider" />
+            android:name=".provider.MagicProvider" />
 
     </application>
 

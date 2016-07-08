@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
+import com.j256.ormlite.table.DatabaseTable;
 import com.tojc.ormlite.android.annotation.AdditionalAnnotation;
 
 import java.sql.SQLException;
@@ -12,23 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.arthur.ormlite.DatabaseHelper;
-import example.arthur.ormlite.GalleryContract;
+import example.arthur.ormlite.provider.ArtCollectionContract;
+import example.arthur.ormlite.provider.ArtworkContract;
+import example.arthur.ormlite.provider.GalleryContract;
 
-import static example.arthur.ormlite.GalleryContract.*;
+import static example.arthur.ormlite.provider.GalleryContract.*;
 
+@DatabaseTable(tableName = ArtCollectionContract.TABLE_NAME)
 @AdditionalAnnotation.Contract()
 @AdditionalAnnotation.DefaultContentUri(authority = GalleryContract.CONTENT_AUTHORITY, path = PATH_ARTWORK)
 @AdditionalAnnotation.DefaultContentMimeTypeVnd(name = GalleryContract.CONTENT_AUTHORITY, type = PATH_ARTWORK)
 public class ArtCollection {
 
     @AdditionalAnnotation.DefaultSortOrder
-    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ArtCollectionEntry._ID)
+    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, columnName = ArtCollectionContract._ID)
     Long id;
 
-    @DatabaseField(columnName = ArtCollectionEntry.NAME)
+    @DatabaseField(columnName = ArtCollectionContract.NAME)
     String name;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtCollectionEntry.CURATOR)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = ArtCollectionContract.CURATOR)
     User curator;
 
     List<Artwork> artworks = null;
@@ -125,7 +129,7 @@ public class ArtCollection {
         artworkArtCollectionQB.where().eq(ArtworkArtCollection.ARTCOLLECTION_ID_COLNAME, artworkSelectArg);
 
         QueryBuilder<Artwork, Long> artworkQb = artworkDao.queryBuilder();
-        artworkQb.where().in(ArtworkEntry._ID, artworkArtCollectionQB);
+        artworkQb.where().in(ArtworkContract._ID, artworkArtCollectionQB);
 
         return artworkQb.prepare();
 

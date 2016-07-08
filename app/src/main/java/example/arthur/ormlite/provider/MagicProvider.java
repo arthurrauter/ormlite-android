@@ -1,11 +1,13 @@
-package example.arthur.ormlite;
+package example.arthur.ormlite.provider;
 
 import com.tojc.ormlite.android.OrmLiteSimpleContentProvider;
 import com.tojc.ormlite.android.framework.MatcherController;
 import com.tojc.ormlite.android.framework.MimeTypeVnd;
 
+import example.arthur.ormlite.DatabaseHelper;
 import example.arthur.ormlite.models.ArtCollection;
 import example.arthur.ormlite.models.Artwork;
+import example.arthur.ormlite.provider.GalleryContract;
 import example.arthur.ormlite.models.User;
 
 /**
