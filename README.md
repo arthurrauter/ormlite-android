@@ -3,7 +3,10 @@
 - 'One to Many' and 'Many to Many' relationships. 
 - Developed with Android Studio.
 - Database is Sqlite3.
+- Content Provider added with [OrmLiteContentProvider](https://github.com/jakenjarvis/Android-OrmLiteContentProvider)
+- For ORMLite, [read here](#ol). For OrmLiteContentProvider, [read here](#cp).
 
+#ORMLite<a name="ol"></a>
 ##TL;DR
 - Run the debugger with a breakpoint in line 117 of the [MainActivity](https://github.com/arthurrauter/ormlite-android/blob/master/app/src/main/java/example/arthur/ormlite/MainActivity.java) and have fun.
 - The magic happens mostly in the [models](https://github.com/arthurrauter/ormlite-android/tree/master/app/src/main/java/example/arthur/ormlite/models). See the SaveToDB and LoadFromDb methods.
@@ -93,9 +96,10 @@ Every query done to the DB will generate new instances, even if the objects alre
 - https://github.com/j256/ormlite-jdbc/tree/master/src/test/java/com/j256/ormlite/examples 
 - http://stackoverflow.com/questions/17673461/ormlite-many-to-many-relation/17701447?noredirect=1#comment63360249_17701447
 - http://www.singingeels.com/Articles/Understanding_SQL_Many_to_Many_Relationships.aspx
+- https://github.com/jakenjarvis/Android-OrmLiteContentProvider
 
-
-
+#ORMLiteContentProvider<a name="cp"></a>
+- Content Provider added with [OrmLiteContentProvider](https://github.com/jakenjarvis/Android-OrmLiteContentProvider) (see OrmLiteContentProvider branch)
 
 
 
