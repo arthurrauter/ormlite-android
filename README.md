@@ -99,7 +99,51 @@ Every query done to the DB will generate new instances, even if the objects alre
 - https://github.com/jakenjarvis/Android-OrmLiteContentProvider
 
 #ORMLiteContentProvider<a name="cp"></a>
-- Content Provider added with [OrmLiteContentProvider](https://github.com/jakenjarvis/Android-OrmLiteContentProvider) (see OrmLiteContentProvider branch)
+Content Provider added with [OrmLiteContentProvider](https://github.com/jakenjarvis/Android-OrmLiteContentProvider) (see **OrmLiteContentProvider branch**)
+```
+git checkout OrmLiteContentProvider
+```
+
+##Setting up
+
+###Dependencies:
+add the following the dependencies to your build.gradle:
+```
+compile 'com.tojc.ormlite.android:ormlite-content-provider-library:1.0.4'
+compile 'com.tojc.ormlite.android:ormlite-content-provider-compiler:1.0.4'
+compile 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+```
+
+###Implement the Contract Class:
+Although the github readme states that this part is optional, I could not make it work. Also, you need one contract class for each class. Trying to put all the classes as inner classes won't work (when I did, it wouldn't compile/build because OrmLiteContentProvider was looking for a specific contract class for each each).
+
+###Configuring the classes:
+The following annotations have to be added to each class that you have in the DB:
+- @Contract
+- @DefaultContentUri
+- @DefaultContentMimeTypeVnd
+
+###Implementing the OrmLiteSqliteHelper:
+If you already implemented it for the ORMLite, you can keep it untouched and it will work. If you haven't, check the ORMLite section in the README.
+
+###Implementing the ContentProvider Class:
+CONTENT_URI_PATTERN, or whatever you choose to name it, has to an unique integer among the other URI_PATTERNS for the other classes and you should add them in crescent order to the MatchController. Don't ask me why.
+
+###Update your AndroidManifest:
+        <provider
+            android:authorities="example.arthur.ormlite"
+            android:name=".provider.MagicProvider" />
+
+###Usage:
+just like a content provider, just:
+```
+Cursor c = getContentResolver().query(ArtworkContract.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+```
+and you will be querying for all the artworks.
 
 
 
